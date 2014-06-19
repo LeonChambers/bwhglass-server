@@ -1,0 +1,11 @@
+indexes:
+  - kind: DataPoint
+    properties:
+    - name: sensor
+    - name: date
+      direction: desc
+  - kind: DataPoint
+    ancestor: yes
+    properties:
+    - name: date
+      direction: desc
