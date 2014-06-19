@@ -60,7 +60,7 @@ def update():
         # Delete sensors that don't have any data
         curr_points = DataPoint.points_for_sensor(sensor.key)
         logging.info("{}, {}".format(sensor.key.id(),curr_points.count()))
-        if curr_points.count() == 0 and sensor_value is not None:
+        if curr_points.count() == 0 and sensor_value is None:
             logging.info("Deleting sensor {}".format(sensor.key.id()))
             sensor.key.delete()
         else:
