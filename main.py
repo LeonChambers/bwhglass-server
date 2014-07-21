@@ -168,7 +168,7 @@ def view_picture():
 @app.route('/video/submit',methods=['GET','POST'])
 def set_video():
     if request.method == 'POST':
-        _file = request.files['Image.jpg']
+        _file = request.files['Video.mp4']
         if _file:
             cloud_file = cloudstorage.open(BUCKET_NAME+"microscope_video."+_file.filename.rsplit('.',1)[1],mode='w',content_type=_file.mimetype)
             _file.save(cloud_file)
