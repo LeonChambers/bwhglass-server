@@ -165,6 +165,40 @@ def view_picture():
             return response
     return "No file found"
 
+@app.route('/video/submit',methods=['GET','POST'])
+def set_video():
+    if request.method == 'POST':
+        _file = request.files['Image.jpg']
+        if _file:
+            cloud_file = cloudstorage.open(BUCKET_NAME+"microscope_video."+_file.filename.rsplit('.',1)[1],mode='w',content_type=_file.mimetype)
+            _file.save(cloud_file)
+            cloud_file.close()
+            return "Success"
+    else:
+        return '''
+        <!doctype html>
+        <title>Upload microscope video</title>
+        <h1>Upload microscope video</h1>
+        <form action="" method=post enctype=multipart/form-data>
+            <p><input type=file name=file>
+                <input type=submit value=Upload>
+        </form>
+        '''
+
+@app.route('/video/view',methods=['GET'])
+def view_video():
+    for _file in cloudstorage.listbucket(BUCKET_NAME):
+        if "microscope_video" in _file.filename:
+            _file = cloudstorage.stat(_file.filename)
+            logging.info(_file.filename)
+            logging.info(_file.content_type)
+            cloud_file = cloudstorage.open(_file.filename,mode='r')
+            response = make_response(cloud_file.read())
+            cloud_file.close()
+            response.mimetype = _file.content_type
+            return response
+    return "No file found"
+
 @app.errorhandler(404)
 def page_not_found(e):
     """Return a custom 404 error."""
