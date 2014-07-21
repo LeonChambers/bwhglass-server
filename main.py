@@ -142,7 +142,7 @@ def set_picture():
             return "Success"
     else:
         return '''
-        <!doctype html>
+        <!dctype html>
         <title>Upload microscope file</title>
         <h1>Upload microscope file</h1>
         <form action="" method=post enctype=multipart/form-data>
